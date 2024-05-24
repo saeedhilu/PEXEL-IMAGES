@@ -29,42 +29,37 @@ class LoginWithEmailOTP(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             validated_data = serializer.validated_data
-            email          = validated_data['email']
-
-            username       = email.split('@')[0]
-
-            
-
+            email = validated_data['email']
+            username = email.split('@')[0]
             try:
-                otp = 123123
+                otp = random.randint(1000, 9999)
                 send_otp_email(email, otp, username)
 
-                
-                request.session['email']        = email
-                request.session['otp']        = otp
-    
-        
+                # Create user instance if not exists
+                user, created = User.objects.get_or_create(email=email, defaults={'username': username})
 
-                return Response({'message': 'GENERATE_OTP_MESSAGE'},
-                                status=status.HTTP_200_OK)
+                # Save OTP and email to session
+                request.session['email'] = email
+                request.session['otp'] = otp
+                print(otp)
 
+                return Response({'message': 'GENERATE_OTP_MESSAGE'}, status=status.HTTP_200_OK)
             except Exception as e:
-                return Response(
-                    {'error': str(e)},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                                )
+                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(
-                serializer.errors, 
-                status=status.HTTP_400_BAD_REQUEST
-                )
-
-
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class VerifyOTP(APIView):
+    """
+    This view handles the OTP verifying.
+    """
     def post(self, request):
         serializer = VerifyOTPSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            return Response({'message': 'OTP verified successfully'}, status=200)
+            print('OTP verification successful')
+
+            return Response({'message': 'OTP verified successfully'}, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors, status=400)
+            print('OTP verification unsuccessful')
+
+            return Response({'message': 'Invalid OTP', 'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

@@ -16,12 +16,7 @@ class GenerateEmailSerializer(serializers.Serializer):
     """
     Serializer for generating email OTP and user registration.
     """ 
-   
     email        = serializers.EmailField()
-    
-
-    
-
     def create(self, validated_data):
         """
         Create user instance using the email as username.
@@ -46,20 +41,15 @@ class VerifyOTPSerializer(serializers.Serializer):
         Validate OTP.
         """
         otp = data.get('otp')
+        print('OTP received:', otp)
         
-        # Retrieve email from session
         email = self.context['request'].session.get('email')
         pre_otp = self.context['request'].session.get('otp')
+
         if not email:
             raise serializers.ValidationError("Email not found in session")
         
-        # Retrieve user by email
-        
-
-        # Check if OTP matches
         if pre_otp != otp:
             raise serializers.ValidationError("Invalid OTP")
 
         return data
-    
-    
