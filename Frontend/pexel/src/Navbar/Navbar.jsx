@@ -15,9 +15,9 @@ function Navbar() {
     <div className='navbar'>
       <div className='navbar__logo'>Pexel</div>
       <div className='navbar__links'>
-        <a href='#'>Home</a>
-        <a href='#'>Wishlist </a>
-        <a href='#'>SavedList </a>
+        <Link to='/'>Home</Link>
+        <Link to='/whishlist'>Wishlist</Link>
+        <Link to='#'>SavedList</Link>
         {isLoggedIn ? (
           <Link to='/account'>Account <i className="fa-solid fa-user"></i></Link>
         ) : (

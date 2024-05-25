@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Login from './Components/Login';
 import Home from './Home/Home';
+import  Whishlist  from './WhishList/Whishlist';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
+        <Route path="/whishlist" element={<Whishlist />} />
       </Routes>
     </Router>
   );
