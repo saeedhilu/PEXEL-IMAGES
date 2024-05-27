@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import instance from "./AxiosApi";
@@ -12,6 +12,7 @@ const Login = () => {
     digit3: "",
     digit4: "",
   });
+  const [islogged,setIslogged] = useState(false)
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -34,6 +35,8 @@ const Login = () => {
     }
   };
 
+
+ 
   const handleBackspace = (e, digit) => {
     if (e.key === "Backspace" && !otp[digit]) {
       const prevInput = document.getElementById(
@@ -62,13 +65,14 @@ const Login = () => {
     setErrorMessage("");
     try {
       const response = await instance.post("api/verify-otp/", { otp: fullOtp });
-      console.log("OTP verified successfully!", response.data);
+      localStorage.setItem('user-data', JSON.stringify(response.data.user));
       navigate("/");
     } catch (error) {
       console.error("Failed to verify OTP:", error);
       setErrorMessage("Invalid OTP. Please try again.");
     }
   };
+ 
 
   const handleButtonClick = showOtpInput
     ? handleVerifyOtpClick

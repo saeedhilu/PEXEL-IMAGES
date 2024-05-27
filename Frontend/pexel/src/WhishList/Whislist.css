@@ -1,46 +1,97 @@
 /* Wishlist.css */
-.wishlist-page {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .wishlist-page h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-  }
-  
-  .wishlist-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .wishlist-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    width: 200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-  }
-  
-  .wishlist-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .wishlist-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .wishlist-card p {
-    padding: 10px;
-    font-size: 1em;
-    color: #333;
-  }
-  
 
-  
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+
+.wishlist-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.wishlist-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.animation-container {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wishlist-page .wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+.wishlist-page .wishlist-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+}
+
+.wishlist-page .wishlist-card {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  height: 300px;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+.wishlist-page .wishlist-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.wishlist-page .wishlist-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.wishlist-page .wishlist-card:hover .wishlist-icon {
+  display: block;
+}
+
+.wishlist-page .photographer-name {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+  .wishlist-page .wishlist-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wishlist-page .wishlist-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .wishlist-page .wishlist-card {
+    height: 200px;
+  }
+}
